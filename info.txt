@@ -1,0 +1,11 @@
+to install package.json
+"npm init"
+
+to install express
+"npm install express --save"
+
+to get current directory
+use (__dirName) before('/')
+
+to send file other than textfile
+use the function 'sendFile'
