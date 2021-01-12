@@ -1,25 +1,37 @@
-const express = require('express');
-
+const express = require("express");
 const app = express();
-app.set('view engine','ejs');
-app.set('views','./src/views');
-app.use(express.static('./public'))
+const nav = [
+  {
+    link: "/books",
+    name: "books",
+  },
+  {
+    link: "/authors",
+    name: "authors",
+  },
+  {
+    link: "/admin",
+    name: "Add Book",
+  },
+];
+const bookRouter = require("./src/routes/bookRoute")(nav);
+const adminRouter = require("./src/routes/adminRoutes")(nav);
+app.set("view engine", "ejs");
+app.set("views", "./src/views");
+app.use("/books", bookRouter);
+app.use("/admin", adminRouter);
+app.use(express.static("./public"));
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/',function(req,res){
-    res.render("index",{
-                nav:[{link:'/books',name:'books'},{link:'/authors',name:'authors'}],
-                title:'Library'
-});
-});
-app.get('/books',function(req,res){
-    res.render("books",{
-                nav:[{link:'/books',name:'books'},{link:'/authors',name:'authors'}],
-                title:'Library'
-});
+app.get("/", function (req, res) {
+  res.render("index", {
+    nav,
+    title: "Library",
+  });
 });
 
-app.listen(5000)
-  
+app.listen(5000);
+
 // Adding library application template
 
 // const express = require('express');
